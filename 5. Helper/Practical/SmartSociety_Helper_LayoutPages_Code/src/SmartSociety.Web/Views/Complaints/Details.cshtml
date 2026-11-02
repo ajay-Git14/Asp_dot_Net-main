@@ -1,0 +1,56 @@
+@model ComplaintDetailsViewModel
+
+@{
+    ViewData["Title"] = "Complaint Details";
+}
+
+@section PageHeader {
+    @await Html.PartialAsync("_PageHeader", new PageHeaderViewModel
+    {
+        Title = Model.Title,
+        Subtitle = $"Reference: {Model.ReferenceNumber}",
+        ActionText = "Back to Complaints",
+        ActionController = "Complaints",
+        ActionName = "Index"
+    })
+}
+
+<div class="details-card">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+            <div class="text-muted small">@Model.ReferenceNumber</div>
+            <h2 class="h4 mb-1">@Model.Title</h2>
+            <p class="text-muted">@Model.Description</p>
+        </div>
+        <div class="text-end">
+            @await Html.PartialAsync("_StatusBadge", Model.Status)
+        </div>
+    </div>
+
+    <dl class="row details-list">
+        <dt class="col-sm-3">Category</dt>
+        <dd class="col-sm-9">@Model.Category</dd>
+
+        <dt class="col-sm-3">Priority</dt>
+        <dd class="col-sm-9">@await Html.PartialAsync("_PriorityBadge", Model.Priority)</dd>
+
+        <dt class="col-sm-3">Created By</dt>
+        <dd class="col-sm-9">@Model.CreatedBy</dd>
+
+        <dt class="col-sm-3">Created On</dt>
+        <dd class="col-sm-9">@Model.CreatedOn.ToString("dd-MMM-yyyy")</dd>
+    </dl>
+
+    @if (Model.CanEdit)
+    {
+        <div class="alert alert-info mb-0">
+            This complaint is still active and can be edited in upcoming modules.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success mb-0">
+            This complaint is resolved, so editing is disabled.
+        </div>
+    }
+</div>

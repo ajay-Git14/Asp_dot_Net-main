@@ -1,0 +1,19 @@
+@host = http://localhost:5180
+
+### Home page
+GET {{host}}/
+
+### Product list - async GET action
+GET {{host}}/Products/Index
+
+### Search products
+GET {{host}}/Products/Search?term=laptop
+
+### Featured action - method name is different because of ActionName
+GET {{host}}/Products/Featured
+
+### GET and HEAD selector demonstration
+GET {{host}}/Products/Ping
+
+### Visible async delay demonstration
+GET {{host}}/Products/SlowDemo

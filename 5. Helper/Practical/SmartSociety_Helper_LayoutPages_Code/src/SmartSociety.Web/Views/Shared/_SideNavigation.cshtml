@@ -1,0 +1,25 @@
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var dashboardActive = currentController == "Dashboard" ? "active" : string.Empty;
+    var complaintsActive = currentController == "Complaints" ? "active" : string.Empty;
+}
+
+<aside class="app-sidebar">
+    <div class="sidebar-title">Navigation</div>
+
+    <a class="sidebar-link @dashboardActive"
+       asp-controller="Dashboard"
+       asp-action="Index">
+        Dashboard
+    </a>
+
+    <a class="sidebar-link @complaintsActive"
+       asp-controller="Complaints"
+       asp-action="Index">
+        Complaints
+    </a>
+
+    <div class="sidebar-note">
+        This sidebar is shared through the main layout.
+    </div>
+</aside>

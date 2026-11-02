@@ -1,0 +1,1 @@
+.dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px}.dashboard-card{background:#fff;border:1px solid #ddd;padding:18px;border-radius:10px}.dashboard-card h2{margin-top:0}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Smart Society Routing Demo</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-content">
+            <a class="brand" asp-controller="RoutingDemo" asp-action="Index">
+                Smart Society Routing Demo
+            </a>
+            <nav>
+                <a asp-controller="RoutingDemo" asp-action="Index">Home</a>
+                <a asp-controller="RoutingDemo" asp-action="Create">Create</a>
+                <a asp-route="routing-help">Concept Guide</a>
+                <a asp-route="track-home">Track</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        @if (TempData["SuccessMessage"] is string message)
+        {
+            <div class="success-message">@message</div>
+        }
+
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            Beginner-friendly ASP.NET Core MVC routing project — one controller only.
+        </div>
+    </footer>
+</body>
+</html>

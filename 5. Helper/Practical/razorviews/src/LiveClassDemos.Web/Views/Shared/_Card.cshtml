@@ -1,0 +1,22 @@
+﻿@model Complaint
+@{
+
+    string id = Model.Id;
+    string title = Model.Title;
+    string description = Model.Description;
+
+}
+
+<div>
+    <h1>
+        @id
+
+    </h1>
+    <h2>
+        @title
+    </h2>
+    <h3>
+        @description
+    </h3>
+
+</div>

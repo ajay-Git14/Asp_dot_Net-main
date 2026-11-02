@@ -1,0 +1,69 @@
+@{
+    ViewData["Title"] = "Routing Concept Guide";
+}
+
+<section class="hero">
+    <p class="eyebrow">Complete checklist</p>
+    <h1>Routing Concepts Covered</h1>
+    <p>Use this page while reading <code>Program.cs</code> and <code>RoutingDemoController.cs</code>.</p>
+</section>
+
+<section class="panel">
+    <table>
+        <thead><tr><th>Concept</th><th>Working example</th></tr></thead>
+        <tbody>
+            <tr><td>Endpoint routing</td><td><code>UseRouting</code> and endpoint mappings in Program.cs</td></tr>
+            <tr><td>Conventional routing</td><td><code>/RoutingDemo/Optional/2</code></td></tr>
+            <tr><td>Default MVC route</td><td><code>{controller=RoutingDemo}/{action=Index}/{id?}</code></td></tr>
+            <tr><td>Required parameter</td><td><code>/complaints/1</code></td></tr>
+            <tr><td>Optional parameter</td><td><code>/RoutingDemo/Optional</code></td></tr>
+            <tr><td>Default value</td><td><code>/pages</code></td></tr>
+            <tr><td>Attribute routing</td><td><code>/track</code></td></tr>
+            <tr><td>Route tokens</td><td><code>/RoutingDemo/TokenDemo/7</code></td></tr>
+            <tr><td>HTTP verb template</td><td><code>GET /verb-demo/2</code> and <code>POST /verb-demo</code></td></tr>
+            <tr><td>Constraints</td><td><code>{id:int:min(1)}</code></td></tr>
+            <tr><td>Named routes</td><td><code>complaint-details</code> and <code>track-complaint</code></td></tr>
+            <tr><td>Tag Helpers</td><td>Links on the home page</td></tr>
+            <tr><td>URL helpers</td><td><code>Url.Action</code> and <code>Url.RouteUrl</code></td></tr>
+            <tr><td>Redirect helpers</td><td><code>/go/list</code> and <code>/go/complaint/1</code></td></tr>
+            <tr><td>Route order</td><td>Specific mappings are before the default route</td></tr>
+            <tr><td>Attribute precedence</td><td><code>/reports/latest</code> and <code>/reports/2026</code></td></tr>
+            <tr><td>Controller/action route combination</td><td><code>/society/complaints/2</code> plus the exact two-level syntax below</td></tr>
+            <tr><td>Ambiguity prevention</td><td><code>/find/by-id/2</code> and <code>/find/by-status/Open</code></td></tr>
+            <tr><td>Route vs query string</td><td><code>/search?term=lift&amp;page=2</code></td></tr>
+            <tr><td>Area routing</td><td><code>/Admin/Dashboard</code></td></tr>
+            <tr><td>Mixed routing</td><td>Conventional and attribute actions in one controller</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="panel">
+    <h2>Controller-Level + Action-Level Route Combination</h2>
+    <p>
+        A controller prefix combines with an action template. This exact concept is documented
+        in the controller comments without adding a second live controller:
+    </p>
+<pre><code>[Route("society")]
+public class ExampleController : Controller
+{
+    [HttpGet("complaints/{id:int}")]
+    public IActionResult Details(int id)
+    {
+        ...
+    }
+}
+
+Final URL: /society/complaints/5</code></pre>
+    <p>
+        The live controller does not use a controller-wide prefix because it intentionally
+        demonstrates conventional and attribute routing together.
+    </p>
+</section>
+
+<section class="panel warning">
+    <h2>Constraint Is Not Validation</h2>
+    <p>
+        A route constraint decides whether a URL matches an endpoint. Business validation still
+        belongs inside the action or service. The tracking action demonstrates both steps.
+    </p>
+</section>

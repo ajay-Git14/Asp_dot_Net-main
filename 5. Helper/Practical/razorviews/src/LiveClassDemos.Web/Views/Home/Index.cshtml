@@ -1,0 +1,48 @@
+﻿@model List<LiveClassDemos.Models.Complaint>
+@* @model string *@
+
+
+@{
+    ViewData["Title"] = "Home Page";
+    // string firstItemTitle = Model[0].Priority;
+
+    //string title = Model;
+    bool isAdmin = false;
+
+
+}
+
+<div class="text-center">
+    @* <h1>@title</h1> *@
+
+    @* @if (isAdmin)
+    {
+        <h1 class="display-4"> @firstItemTitle </h1>
+        <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    }
+    else
+    {
+        <h1>Sorry you don't have writes to Test</h1>
+    } *@
+
+    @* @switch (firstItemTitle){     
+       
+            case "High":
+               <h1>Please take this up Asap</h1>
+            break;
+        case "Low":
+            <h1>Please take this up after 3 hours</h1>
+            break;
+        case "Medium":
+            <h1>Please take this up afer 1 hour</h1>
+            break;
+
+    } *@
+
+    @foreach(Complaint item in Model)
+    {
+        <partial name="_Card" model="item" />
+    }
+
+   
+</div>

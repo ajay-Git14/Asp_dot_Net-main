@@ -1,0 +1,4 @@
+[
+  {"outputFileName":"wwwroot/css/app.min.css","inputFiles":["wwwroot/css/site.css","wwwroot/css/dashboard.css","wwwroot/css/forms.css"],"minify":{"enabled":true}},
+  {"outputFileName":"wwwroot/js/app.min.js","inputFiles":["wwwroot/js/site.js","wwwroot/js/dashboard.js","wwwroot/js/complaint-status.js"],"minify":{"enabled":true}}
+]

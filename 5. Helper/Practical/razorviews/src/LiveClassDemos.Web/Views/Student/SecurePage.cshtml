@@ -1,0 +1,11 @@
+﻿<h1>Secure Student Page</h1>
+
+<p>You are logged in successfully.</p>
+
+<p>
+    <strong>User Email:</strong> @User.Identity?.Name
+</p>
+
+<form asp-controller="Account" asp-action="Logout" method="post">
+    <button type="submit">Logout</button>
+</form>

@@ -1,0 +1,52 @@
+﻿@model LiveClassDemos.ViewModels.LoginViewModel
+
+<h1>Login</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div style="color:green; font-weight:bold;">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<form asp-action="Login" method="post">
+
+    <input type="hidden" asp-for="ReturnUrl" />
+
+    <div asp-validation-summary="All" style="color:red"></div>
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <input asp-for="RememberMe" />
+        <label asp-for="RememberMe"></label>
+    </div>
+
+    <br />
+
+    <button type="submit">Login</button>
+
+</form>
+
+<p>
+    New user?
+    <a asp-action="Register">Register here</a>
+</p>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

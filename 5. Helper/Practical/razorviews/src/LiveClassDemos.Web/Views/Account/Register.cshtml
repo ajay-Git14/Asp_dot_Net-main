@@ -1,0 +1,52 @@
+﻿@model LiveClassDemos.ViewModels.RegisterViewModel
+
+<h1>Register</h1>
+
+<form asp-action="Register" method="post">
+
+    <div asp-validation-summary="All" style="color:red"></div>
+
+    <div>
+        <label asp-for="FullName"></label>
+        <input asp-for="FullName" />
+        <span asp-validation-for="FullName" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" />
+        <span asp-validation-for="ConfirmPassword" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <button type="submit">Register</button>
+
+</form>
+
+<p>
+    Already registered?
+    <a asp-action="Login">Login here</a>
+</p>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

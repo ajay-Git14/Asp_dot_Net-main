@@ -1,0 +1,26 @@
+@model IReadOnlyList<Product>
+@{
+    ViewData["Title"] = "Featured products";
+}
+
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">ActionName selector</p>
+        <h1>Featured products</h1>
+        <p>
+            The URL uses <code>Featured</code>, but the C# method is named
+            <code>ShowFeaturedProducts</code>.
+        </p>
+    </div>
+</div>
+
+<div class="grid">
+@foreach (var product in Model)
+{
+    <article class="card">
+        <h2>@product.Name</h2>
+        <p class="price">@product.Price.ToString("C")</p>
+        <a asp-action="Details" asp-route-id="@product.Id">View details</a>
+    </article>
+}
+</div>

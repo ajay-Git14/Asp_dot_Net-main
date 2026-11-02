@@ -1,0 +1,36 @@
+﻿@model LiveClassDemos.Models.Student
+
+
+@{
+   ViewData["Title"] = "Manual Success";
+
+    var StudentCourse = ViewData["StudentCourse"] ?? "Empty Course";
+    string StudentName = ViewBag.StudentName ?? "Student";
+    string StudentEmail = ViewBag.StudentEmail ?? "test@gmail.com";
+}
+
+
+<h1>Manual Success</h1>
+
+<p>Name: @Model.Name</p>
+<p>Email: @Model.Email</p>
+<p>Course: @Model.Course</p>
+<p>Age: @Model.Age</p>
+
+<h1>State Management</h1>
+<h2>@StudentCourse</h2>
+<h2>@StudentName</h2>
+<h2>@StudentEmail</h2>
+
+
+<h1> Cookies and Session</h1>
+
+
+@if (!string.IsNullOrEmpty(Model.ImagePath))
+{
+    <img src="@Model.ImagePath" width="150" />
+}
+else
+{
+    <p>No image uploaded.</p>
+}

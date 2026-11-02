@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Action Flow Demo</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-content">
+            <a class="brand" asp-controller="Home" asp-action="Index">Action Flow Demo</a>
+            <nav>
+                <a asp-controller="Home" asp-action="Index">Home</a>
+                <a asp-controller="Products" asp-action="Index">Products</a>
+                <a asp-controller="Products" asp-action="Create">Create</a>
+                <a asp-controller="Products" asp-action="Featured">Featured</a>
+                <a asp-controller="Products" asp-action="Search">Search</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container page-content">
+        @if (TempData["SuccessMessage"] is string successMessage)
+        {
+            <div class="alert success">@successMessage</div>
+        }
+
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            Beginner ASP.NET Core MVC practice project
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

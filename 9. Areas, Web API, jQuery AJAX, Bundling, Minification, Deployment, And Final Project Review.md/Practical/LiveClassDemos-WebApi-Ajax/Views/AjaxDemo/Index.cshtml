@@ -1,0 +1,205 @@
+@{
+    ViewData["Title"] = "Web API and AJAX Demo";
+}
+
+<h1>Web API and jQuery AJAX Demo</h1>
+<p class="subtitle">ASP.NET Core MVC + EF Core SQLite</p>
+
+<div id="message" class="message" hidden></div>
+
+<section>
+    <div class="section-heading">
+        <h2>Dashboard Summary</h2>
+        <button id="refreshDashboard" type="button">Refresh Dashboard</button>
+    </div>
+
+    <div class="cards">
+        <div class="card"><span>Total</span><strong id="totalComplaints">0</strong></div>
+        <div class="card"><span>New</span><strong id="newComplaints">0</strong></div>
+        <div class="card"><span>In Progress</span><strong id="inProgressComplaints">0</strong></div>
+        <div class="card"><span>Resolved</span><strong id="resolvedComplaints">0</strong></div>
+        <div class="card"><span>High Priority</span><strong id="highPriorityComplaints">0</strong></div>
+    </div>
+</section>
+
+<section>
+    <div class="section-heading">
+        <h2>Complaints</h2>
+        <div>
+            <select id="statusFilter">
+                <option value="">All statuses</option>
+                <option value="New">New</option>
+                <option value="InProgress">InProgress</option>
+                <option value="Resolved">Resolved</option>
+            </select>
+            <button id="loadComplaints" type="button">Load Complaints</button>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th><th>Title</th><th>Category</th><th>Priority</th><th>Status</th><th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="complaintTableBody"></tbody>
+        </table>
+    </div>
+</section>
+
+<section>
+    <h2>Create Complaint</h2>
+    <div class="form-grid">
+        <input id="title" maxlength="100" placeholder="Title" />
+        <input id="category" placeholder="Category" />
+        <select id="priority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+        <textarea id="description" placeholder="Description (minimum 10 characters)"></textarea>
+    </div>
+    <button id="createComplaint" type="button">Create Complaint</button>
+</section>
+
+<section>
+    <h2>Update Complaint Status</h2>
+    <div class="form-grid">
+        <input type="number" id="complaintId" min="1" placeholder="Complaint Id" />
+        <select id="newStatus">
+            <option value="New">New</option>
+            <option value="InProgress">InProgress</option>
+            <option value="Resolved">Resolved</option>
+        </select>
+        <textarea id="remarks" placeholder="Remarks (optional)"></textarea>
+    </div>
+    <button id="updateStatus" type="button">Update Status</button>
+</section>
+
+@section Scripts {
+<script>
+    function showMessage(text, isError) {
+        const box = $("#message");
+        box.text(text).removeClass("error success").addClass(isError ? "error" : "success").prop("hidden", false);
+    }
+
+    function getErrorMessage(xhr, fallback) {
+        if (xhr.responseJSON?.message) return xhr.responseJSON.message;
+        if (xhr.responseJSON?.errors) {
+            return Object.values(xhr.responseJSON.errors).flat().join(" ");
+        }
+        return fallback;
+    }
+
+    function loadDashboardSummary() {
+        $.ajax({
+            url: "/api/dashboard/summary",
+            method: "GET",
+            success: function (data) {
+                $("#totalComplaints").text(data.totalComplaints);
+                $("#newComplaints").text(data.newComplaints);
+                $("#inProgressComplaints").text(data.inProgressComplaints);
+                $("#resolvedComplaints").text(data.resolvedComplaints);
+                $("#highPriorityComplaints").text(data.highPriorityComplaints);
+            },
+            error: function (xhr) { showMessage(getErrorMessage(xhr, "Unable to load dashboard."), true); }
+        });
+    }
+
+    function loadComplaints() {
+        const status = $("#statusFilter").val();
+        const url = status ? "/api/complaints?status=" + encodeURIComponent(status) : "/api/complaints";
+
+        $.ajax({
+            url: url,
+            method: "GET",
+            success: function (complaints) {
+                const body = $("#complaintTableBody").empty();
+
+                if (complaints.length === 0) {
+                    body.append($("<tr>").append($("<td>").attr("colspan", 6).text("No complaints found.")));
+                    return;
+                }
+
+                complaints.forEach(function (complaint) {
+                    const row = $("<tr>");
+                    row.append($("<td>").text(complaint.id));
+                    row.append($("<td>").text(complaint.title));
+                    row.append($("<td>").text(complaint.category));
+                    row.append($("<td>").text(complaint.priority));
+                    row.append($("<td>").text(complaint.status));
+                    row.append($("<td>").append(
+                        $("<button>").text("Select").addClass("selectComplaint").attr("data-id", complaint.id)
+                    ));
+                    body.append(row);
+                });
+            },
+            error: function (xhr) { showMessage(getErrorMessage(xhr, "Unable to load complaints."), true); }
+        });
+    }
+
+    function createComplaint() {
+        const request = {
+            title: $("#title").val(),
+            description: $("#description").val(),
+            category: $("#category").val(),
+            priority: $("#priority").val()
+        };
+
+        $.ajax({
+            url: "/api/complaints",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(request),
+            success: function (response) {
+                showMessage(response.message + " New Id: " + response.complaintId, false);
+                $("#title, #description, #category").val("");
+                loadComplaints();
+                loadDashboardSummary();
+            },
+            error: function (xhr) { showMessage(getErrorMessage(xhr, "Unable to create complaint."), true); }
+        });
+    }
+
+    function updateStatus() {
+        const id = $("#complaintId").val();
+        if (!id) {
+            showMessage("Select a complaint or enter a complaint Id.", true);
+            return;
+        }
+
+        const request = {
+            newStatus: $("#newStatus").val(),
+            remarks: $("#remarks").val()
+        };
+
+        $.ajax({
+            url: "/api/complaints/" + encodeURIComponent(id) + "/status",
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(request),
+            success: function (response) {
+                showMessage(response.message, false);
+                loadComplaints();
+                loadDashboardSummary();
+            },
+            error: function (xhr) { showMessage(getErrorMessage(xhr, "Unable to update status."), true); }
+        });
+    }
+
+    $(function () {
+        loadDashboardSummary();
+        loadComplaints();
+        $("#refreshDashboard").on("click", loadDashboardSummary);
+        $("#loadComplaints").on("click", loadComplaints);
+        $("#statusFilter").on("change", loadComplaints);
+        $("#createComplaint").on("click", createComplaint);
+        $("#updateStatus").on("click", updateStatus);
+        $(document).on("click", ".selectComplaint", function () {
+            $("#complaintId").val($(this).data("id"));
+            showMessage("Complaint " + $(this).data("id") + " selected.", false);
+        });
+    });
+</script>
+}

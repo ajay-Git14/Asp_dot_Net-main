@@ -1,0 +1,42 @@
+@model IReadOnlyList<Product>
+@{
+    ViewData["Title"] = "Search products";
+    var term = ViewBag.Term as string;
+}
+
+<section class="card">
+    <p class="eyebrow">Query string and async action</p>
+    <h1>Search products</h1>
+
+    <form asp-action="Search" method="get" class="search-form">
+        <label for="term">Product name</label>
+        <div class="search-row">
+            <input id="term" name="term" value="@term" placeholder="Example: laptop" />
+            <button class="button primary" type="submit">Search</button>
+        </div>
+    </form>
+</section>
+
+<section class="card">
+    <h2>Results (@Model.Count)</h2>
+
+    @if (Model.Count == 0)
+    {
+        <p>No products matched your search.</p>
+    }
+    else
+    {
+        <ul class="result-list">
+        @foreach (var product in Model)
+        {
+            <li>
+                <div>
+                    <strong>@product.Name</strong>
+                    <span>@product.Price.ToString("C")</span>
+                </div>
+                <a asp-action="Details" asp-route-id="@product.Id">Details</a>
+            </li>
+        }
+        </ul>
+    }
+</section>

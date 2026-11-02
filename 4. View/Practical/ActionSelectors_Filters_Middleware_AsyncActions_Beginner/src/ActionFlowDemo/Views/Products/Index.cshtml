@@ -1,0 +1,46 @@
+@model IReadOnlyList<Product>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">Async GET action</p>
+        <h1>Products</h1>
+        <p>The controller awaited <code>GetAllAsync()</code> before rendering this view.</p>
+    </div>
+    <a class="button primary" asp-action="Create">Add product</a>
+</div>
+
+<div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Featured</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Price.ToString("C")</td>
+                <td>@(product.IsFeatured ? "Yes" : "No")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@product.Id">Details</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<div class="tip">
+    Open browser Developer Tools and inspect the response headers
+    <code>X-Action-Time-ms</code> and <code>X-Request-Time-ms</code>.
+</div>

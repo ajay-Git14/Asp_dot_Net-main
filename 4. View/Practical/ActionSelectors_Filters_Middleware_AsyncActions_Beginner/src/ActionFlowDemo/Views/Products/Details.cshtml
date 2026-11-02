@@ -1,0 +1,28 @@
+@model Product
+@{
+    ViewData["Title"] = "Product details";
+}
+
+<section class="card details-card">
+    <p class="eyebrow">Async details action</p>
+    <h1>@Model.Name</h1>
+
+    <dl>
+        <dt>ID</dt>
+        <dd>@Model.Id</dd>
+
+        <dt>Price</dt>
+        <dd>@Model.Price.ToString("C")</dd>
+
+        <dt>Featured</dt>
+        <dd>@(Model.IsFeatured ? "Yes" : "No")</dd>
+
+        <dt>Created</dt>
+        <dd>@Model.CreatedAt.ToLocalTime().ToString("dd MMM yyyy, hh:mm tt")</dd>
+    </dl>
+
+    <div class="button-row">
+        <a class="button" asp-action="Index">Back to products</a>
+        <a class="button primary" asp-action="Create">Create another</a>
+    </div>
+</section>

@@ -1,0 +1,22 @@
+@model RouteResultViewModel
+@{
+    ViewData["Title"] = "Admin Area Route";
+}
+
+<section class="hero">
+    <p class="eyebrow">Area = Admin</p>
+    <h1>@Model.Heading</h1>
+    <p>@Model.Explanation</p>
+</section>
+
+<section class="panel">
+    <p><strong>Path:</strong> <code>@Model.RequestPath</code></p>
+    <p><strong>Endpoint:</strong> <code>@Model.EndpointName</code></p>
+    <h2>Route Values</h2>
+    <ul>
+        @foreach (var pair in Model.RouteValues)
+        {
+            <li><code>@pair.Key = @pair.Value</code></li>
+        }
+    </ul>
+</section>

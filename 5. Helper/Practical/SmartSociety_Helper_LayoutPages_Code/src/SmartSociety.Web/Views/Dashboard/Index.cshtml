@@ -1,0 +1,66 @@
+@model DashboardIndexViewModel
+
+@{
+    ViewData["Title"] = Model.PageTitle;
+}
+
+@section PageHeader {
+    @await Html.PartialAsync("_PageHeader", new PageHeaderViewModel
+    {
+        Title = Model.PageTitle,
+        Subtitle = Model.PageSubtitle,
+        ActionText = "Create Complaint",
+        ActionController = "Complaints",
+        ActionName = "Create"
+    })
+}
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="metric-card">
+            <span>Total</span>
+            <strong>@Model.TotalComplaints</strong>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="metric-card">
+            <span>Open</span>
+            <strong>@Model.OpenComplaints</strong>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="metric-card">
+            <span>Assigned</span>
+            <strong>@Model.AssignedComplaints</strong>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="metric-card">
+            <span>Resolved</span>
+            <strong>@Model.ResolvedComplaints</strong>
+        </div>
+    </div>
+</div>
+
+<h2 class="h4 mb-3">Recent Complaints</h2>
+
+@if (!Model.RecentComplaints.Any())
+{
+    @await Html.PartialAsync("_EmptyState", new EmptyStateViewModel
+    {
+        Title = "No recent complaints",
+        Message = "Once residents create complaints, they will appear here.",
+        ActionText = "Create Complaint",
+        ActionController = "Complaints",
+        ActionName = "Create"
+    })
+}
+else
+{
+    <div class="vstack gap-3">
+        @foreach (var complaint in Model.RecentComplaints)
+        {
+            @await Html.PartialAsync("_ComplaintSummaryCard", complaint)
+        }
+    </div>
+}

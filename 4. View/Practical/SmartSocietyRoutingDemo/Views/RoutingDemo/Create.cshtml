@@ -1,0 +1,24 @@
+@model ComplaintInputModel
+@{
+    ViewData["Title"] = "Create Complaint";
+}
+
+<section class="hero">
+    <p class="eyebrow">GET + POST action selection</p>
+    <h1>Create Complaint</h1>
+    <p>GET displays this form. POST validates and redirects using a named route.</p>
+</section>
+
+<form asp-controller="RoutingDemo" asp-action="Create" method="post" class="panel form-stack">
+    <div asp-validation-summary="ModelOnly" class="validation"></div>
+
+    <label asp-for="Title"></label>
+    <input asp-for="Title" />
+    <span asp-validation-for="Title" class="validation"></span>
+
+    <label asp-for="Block"></label>
+    <input asp-for="Block" />
+    <span asp-validation-for="Block" class="validation"></span>
+
+    <button type="submit">Create Complaint</button>
+</form>

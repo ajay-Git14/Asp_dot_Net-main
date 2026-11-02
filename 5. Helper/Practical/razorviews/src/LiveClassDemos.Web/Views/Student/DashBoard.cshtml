@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Student Dashboard";
+    var StudentCourse = ViewData["StudentCourse"] ?? "Empty Course";
+    string StudentName = ViewBag.StudentName ?? "Student";
+    string StudentEmail = ViewBag.StudentEmail ?? "test@gmail.com";
+}
+<h1>I am Dashboard</h1>
+<h1>State Management</h1>
+<h2>@StudentCourse</h2>
+<h2>@StudentName</h2>
+<h2>@StudentEmail</h2>

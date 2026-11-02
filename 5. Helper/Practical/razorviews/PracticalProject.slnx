@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/LiveClassDemos.Web/">
+    <Project Path="src/LiveClassDemos.Web/LiveClassDemos.csproj" />
+  </Folder>
+</Solution>

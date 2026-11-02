@@ -1,0 +1,52 @@
+﻿@model LiveClassDemos.Models.Student;
+@{
+    ViewData["Title"]="Create a student";
+}
+
+
+
+
+<h2>Student Registration Form</h2>
+
+<form asp-controller="Student" asp-action="Create" method="post">
+
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Course"></label>
+        <select asp-for="Course">
+            <option value="">-- Select Course --</option>
+            <option value="ASP.NET Core MVC">ASP.NET Core MVC</option>
+            <option value="C#">C#</option>
+            <option value="SQL Server">SQL Server</option>
+        </select>
+        <span asp-validation-for="Course" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Age"></label>
+        <input asp-for="Age" type="number" />
+        <span asp-validation-for="Age" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <button type="submit">Submit</button>
+
+</form>

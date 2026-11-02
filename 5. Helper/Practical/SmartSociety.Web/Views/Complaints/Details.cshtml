@@ -1,0 +1,64 @@
+@model ComplaintDetailsViewModel
+
+@{
+    ViewData["Title"] = "Complaint Details";
+
+    var statusClass = Model.Status switch
+    {
+        "Open" => "badge bg-warning text-dark",
+        "Assigned" => "badge bg-info text-dark",
+        "Resolved" => "badge bg-success",
+        _ => "badge bg-secondary"
+    };
+}
+
+<div class="container mt-4">
+    <div class="mb-3">
+        <a asp-controller="Complaints"
+           asp-action="Index">
+            Back to complaints
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h1 class="h4 mb-0">@Model.Title</h1>
+            <span class="@statusClass">@Model.Status</span>
+        </div>
+
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Reference</dt>
+                <dd class="col-sm-9">@Model.ReferenceNumber</dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Description</dd>
+
+                <dt class="col-sm-3">Category</dt>
+                <dd class="col-sm-9">@Model.Category</dd>
+
+                <dt class="col-sm-3">Priority</dt>
+                <dd class="col-sm-9">@Model.Priority</dd>
+
+                <dt class="col-sm-3">Created By</dt>
+                <dd class="col-sm-9">@Model.CreatedBy</dd>
+
+                <dt class="col-sm-3">Created On</dt>
+                <dd class="col-sm-9">@Model.CreatedOn.ToString("dd-MMM-yyyy")</dd>
+            </dl>
+
+            @if (Model.CanEdit)
+            {
+                <div class="alert alert-info">
+                    This complaint can still be updated because it is not resolved.
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-success">
+                    This complaint is resolved and editing is disabled.
+                </div>
+            }
+        </div>
+    </div>
+</div>

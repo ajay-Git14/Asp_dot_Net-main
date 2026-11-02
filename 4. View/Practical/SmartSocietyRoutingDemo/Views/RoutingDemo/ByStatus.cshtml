@@ -1,0 +1,30 @@
+@model List<Complaint>
+@{
+    ViewData["Title"] = "Complaints By Status";
+}
+
+<section class="hero">
+    <p class="eyebrow">Named route: complaint-status</p>
+    <h1>Status: @ViewBag.SelectedStatus</h1>
+    <p>The <code>{status:alpha}</code> route segment supplied the status value.</p>
+</section>
+
+<section class="panel">
+    @if (Model.Count == 0)
+    {
+        <p>No matching complaints were found.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var complaint in Model)
+            {
+                <li>
+                    <a asp-route="complaint-details" asp-route-id="@complaint.Id">
+                        @complaint.ReferenceNumber — @complaint.Title
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+</section>

@@ -1,0 +1,140 @@
+@model ComplaintIndexViewModel
+
+@{
+    ViewData["Title"] = Model.PageTitle;
+    var hasComplaints = Model.Complaints.Any();
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1>@Model.PageTitle</h1>
+            <p class="text-muted mb-0">
+                Razor View rendered using a strongly typed ViewModel.
+            </p>
+        </div>
+
+        <a class="btn btn-primary"
+           asp-controller="Complaints"
+           asp-action="Create">
+            Create Complaint
+        </a>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card summary-card">
+                <div class="card-body">
+                    <h5>Total</h5>
+                    <h2>@Model.TotalComplaints</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card summary-card">
+                <div class="card-body">
+                    <h5>Open</h5>
+                    <h2>@Model.OpenComplaints</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card summary-card">
+                <div class="card-body">
+                    <h5>Resolved</h5>
+                    <h2>@Model.ResolvedComplaints</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <a class="btn btn-sm btn-outline-secondary"
+           asp-controller="Complaints"
+           asp-action="Index">
+            All
+        </a>
+
+        <a class="btn btn-sm btn-outline-warning"
+           asp-controller="Complaints"
+           asp-action="Index"
+           asp-route-status="Open">
+            Open
+        </a>
+
+        <a class="btn btn-sm btn-outline-info"
+           asp-controller="Complaints"
+           asp-action="Index"
+           asp-route-status="Assigned">
+            Assigned
+        </a>
+
+        <a class="btn btn-sm btn-outline-success"
+           asp-controller="Complaints"
+           asp-action="Index"
+           asp-route-status="Resolved">
+            Resolved
+        </a>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.SelectedStatus))
+    {
+        <div class="alert alert-info">
+            Showing complaints with status: <strong>@Model.SelectedStatus</strong>
+        </div>
+    }
+
+    @if (!hasComplaints)
+    {
+        <div class="alert alert-warning">
+            No complaints found.
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Reference</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var complaint in Model.Complaints)
+                {
+                    var priorityClass = complaint.IsUrgent
+                        ? "badge bg-danger"
+                        : "badge bg-secondary";
+
+                    <tr>
+                        <td>@complaint.ReferenceNumber</td>
+                        <td>@complaint.Title</td>
+                        <td>@complaint.Category</td>
+                        <td>
+                            <span class="@priorityClass">
+                                @complaint.Priority
+                            </span>
+                        </td>
+                        <td>@complaint.Status</td>
+                        <td>@complaint.CreatedOn.ToString("dd-MMM-yyyy")</td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-primary"
+                               asp-controller="Complaints"
+                               asp-action="Details"
+                               asp-route-id="@complaint.Id">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

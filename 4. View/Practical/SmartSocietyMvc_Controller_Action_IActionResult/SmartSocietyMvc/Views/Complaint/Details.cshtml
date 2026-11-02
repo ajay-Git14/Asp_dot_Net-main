@@ -1,0 +1,55 @@
+@model SmartSocietyMvc.Models.ComplaintViewModel
+
+@{
+    ViewData["Title"] = ViewData["PageTitle"];
+}
+
+<h1>@ViewData["PageTitle"]</h1>
+
+<p>@ViewBag.Message</p>
+
+<table border="1" cellpadding="10" cellspacing="0">
+    <tr>
+        <th>Complaint Id</th>
+        <td>@Model.Id</td>
+    </tr>
+
+    <tr>
+        <th>Title</th>
+        <td>@Model.Title</td>
+    </tr>
+
+    <tr>
+        <th>Description</th>
+        <td>@Model.Description</td>
+    </tr>
+
+    <tr>
+        <th>Raised By</th>
+        <td>@Model.RaisedBy</td>
+    </tr>
+
+    <tr>
+        <th>Flat Number</th>
+        <td>@Model.FlatNumber</td>
+    </tr>
+
+    <tr>
+        <th>Priority</th>
+        <td>@Model.Priority</td>
+    </tr>
+
+    <tr>
+        <th>Status</th>
+        <td>@Model.Status</td>
+    </tr>
+
+    <tr>
+        <th>Created Date</th>
+        <td>@Model.CreatedDate.ToString("dd-MMM-yyyy hh:mm tt")</td>
+    </tr>
+</table>
+
+<br />
+
+<a href="/Complaint/Index">Back To Complaint List</a>

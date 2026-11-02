@@ -1,0 +1,22 @@
+@model PageHeaderViewModel
+
+<div class="page-header">
+    <div>
+        <h1>@Model.Title</h1>
+        @if (!string.IsNullOrWhiteSpace(Model.Subtitle))
+        {
+            <p class="text-muted mb-0">@Model.Subtitle</p>
+        }
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ActionText)
+        && !string.IsNullOrWhiteSpace(Model.ActionController)
+        && !string.IsNullOrWhiteSpace(Model.ActionName))
+    {
+        <a class="btn btn-primary"
+           asp-controller="@Model.ActionController"
+           asp-action="@Model.ActionName">
+            @Model.ActionText
+        </a>
+    }
+</div>

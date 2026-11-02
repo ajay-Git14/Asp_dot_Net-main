@@ -1,0 +1,48 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<section class="hero">
+    <p class="eyebrow">ASP.NET Core MVC practice</p>
+    <h1>Follow one request from middleware to an async action</h1>
+    <p>
+        This project demonstrates action selectors, an MVC action filter,
+        custom middleware, and asynchronous controller actions.
+    </p>
+    <div class="button-row">
+        <a class="button primary" asp-controller="Products" asp-action="Index">Open product list</a>
+        <a class="button" asp-controller="Products" asp-action="Create">Test GET and POST</a>
+    </div>
+</section>
+
+<section class="grid">
+    <article class="card">
+        <h2>1. Action selectors</h2>
+        <p><code>[HttpGet]</code> displays the form and <code>[HttpPost]</code> processes it.</p>
+    </article>
+
+    <article class="card">
+        <h2>2. Action filter</h2>
+        <p>The filter logs activity before and after each product action.</p>
+    </article>
+
+    <article class="card">
+        <h2>3. Middleware</h2>
+        <p>The middleware measures the total request time and adds a response header.</p>
+    </article>
+
+    <article class="card">
+        <h2>4. Async actions</h2>
+        <p>The controller awaits an asynchronous service instead of blocking the request thread.</p>
+    </article>
+</section>
+
+<section class="card">
+    <h2>Try these endpoints</h2>
+    <ul class="link-list">
+        <li><a asp-controller="Products" asp-action="Featured">ActionName example</a></li>
+        <li><a asp-controller="Products" asp-action="Ping">AcceptVerbs example</a></li>
+        <li><a asp-controller="Products" asp-action="SlowDemo">Slow async action</a></li>
+        <li><a asp-controller="Products" asp-action="Search" asp-route-term="laptop">Async search</a></li>
+    </ul>
+</section>

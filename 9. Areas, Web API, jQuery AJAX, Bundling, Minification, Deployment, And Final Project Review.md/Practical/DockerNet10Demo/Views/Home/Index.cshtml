@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "Docker Demo";
+}
+
+<section class="hero">
+    <span class="badge">Running successfully</span>
+    <h1>.NET 10 MVC Application In Docker</h1>
+    <p>
+        This application is ready to build and deploy using a multi-stage Dockerfile.
+    </p>
+</section>
+
+<section class="grid">
+    <article class="card">
+        <h2>Environment</h2>
+        <p>@ViewBag.EnvironmentName</p>
+    </article>
+
+    <article class="card">
+        <h2>Container/Machine</h2>
+        <p>@ViewBag.MachineName</p>
+    </article>
+
+    <article class="card">
+        <h2>Health Endpoint</h2>
+        <p><a href="/health">Open /health</a></p>
+    </article>
+</section>
+
+<section class="commands">
+    <h2>Docker Commands</h2>
+    <pre>docker build -t docker-net10-demo .
+docker run -d -p 8080:8080 --name docker-net10-container docker-net10-demo</pre>
+</section>

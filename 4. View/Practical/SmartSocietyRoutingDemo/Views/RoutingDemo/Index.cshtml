@@ -1,0 +1,117 @@
+@model RoutingHomeViewModel
+@{
+    ViewData["Title"] = "Routing Home";
+}
+
+<section class="hero">
+    <p class="eyebrow">Module 4 · Hour 3</p>
+    <h1>ASP.NET Core MVC Routing</h1>
+    <p>
+        Every example in this project is handled by one controller:
+        <code>RoutingDemoController</code>.
+    </p>
+</section>
+
+<section class="panel">
+    <h2>1. Conventional Route + Query String</h2>
+    <form method="get" asp-controller="RoutingDemo" asp-action="Index" class="form-grid">
+        <label>
+            Status
+            <select name="status">
+                <option value="">All</option>
+                <option value="Open" selected="@(Model.SelectedStatus == "Open" ? "selected" : null)">Open</option>
+                <option value="InProgress" selected="@(Model.SelectedStatus == "InProgress" ? "selected" : null)">In Progress</option>
+                <option value="Resolved" selected="@(Model.SelectedStatus == "Resolved" ? "selected" : null)">Resolved</option>
+            </select>
+        </label>
+        <label>
+            Search
+            <input name="search" value="@Model.Search" placeholder="Example: lift" />
+        </label>
+        <label>
+            Page
+            <input name="pageNumber" type="number" min="1" value="@Model.PageNumber" />
+        </label>
+        <button type="submit">Apply Query String</button>
+    </form>
+    <p class="hint">
+        Example: <code>/RoutingDemo/Index?status=Open&amp;search=lift&amp;pageNumber=1</code>
+    </p>
+</section>
+
+<section class="panel">
+    <h2>2. Named Conventional Route + Tag Helpers</h2>
+    <div class="cards">
+        @foreach (var complaint in Model.Complaints)
+        {
+            <article class="card">
+                <p class="eyebrow">@complaint.ReferenceNumber</p>
+                <h3>@complaint.Title</h3>
+                <p>Status: <strong>@complaint.Status</strong></p>
+                <p>Block: @complaint.Block</p>
+
+                <a class="button secondary"
+                   asp-route="complaint-details"
+                   asp-route-id="@complaint.Id">
+                    View /complaints/@complaint.Id
+                </a>
+
+                <a asp-route="track-complaint"
+                   asp-route-referenceNumber="@complaint.ReferenceNumber">
+                    Track by reference
+                </a>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="panel">
+    <h2>3. URL Generation</h2>
+    <table>
+        <thead>
+            <tr><th>Helper</th><th>Generated URL</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>Url.Action</code></td><td><code>@Model.UrlFromUrlAction</code></td></tr>
+            <tr><td><code>Url.RouteUrl</code></td><td><code>@Model.UrlFromNamedRoute</code></td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="panel">
+    <h2>4. Try Every Routing Concept</h2>
+    <div class="link-grid">
+        <a asp-controller="RoutingDemo" asp-action="Optional">Optional id missing</a>
+        <a asp-controller="RoutingDemo" asp-action="Optional" asp-route-id="2">Optional id = 2</a>
+        <a asp-controller="RoutingDemo" asp-action="DefaultValue">Default value</a>
+        <a asp-route="complaint-status" asp-route-status="Open">Status conventional route</a>
+        <a asp-route="track-home">Attribute route</a>
+        <a asp-route="track-complaint" asp-route-referenceNumber="CMP-2026-0001">Named attribute route</a>
+        <a asp-route="token-demo" asp-route-id="7">Route tokens</a>
+        <a asp-route="verb-get" asp-route-id="2">HttpGet template</a>
+        <a asp-route="page-default">Route default page</a>
+        <a asp-route="page-default" asp-route-pageNumber="4">Route page = 4</a>
+        <a asp-route="optional-category">Optional category</a>
+        <a asp-route="optional-category" asp-route-name="Maintenance">Category value</a>
+        <a asp-route="building-floor" asp-route-block="A" asp-route-floor="3">Multiple route values</a>
+        <a asp-route="combined-route-equivalent" asp-route-id="2">Combined prefix result</a>
+        <a asp-route="latest-report">Attribute precedence: literal</a>
+        <a asp-route="report-year" asp-route-year="2026">Attribute precedence: constrained parameter</a>
+        <a asp-route="search-complaints" asp-route-term="lift" asp-route-page="2">Query-string values</a>
+        <a asp-route="find-by-id" asp-route-id="2">Unambiguous id route</a>
+        <a asp-route="find-by-status" asp-route-status="Open">Unambiguous status route</a>
+        <a asp-route="go-list">RedirectToAction</a>
+        <a asp-route="go-complaint" asp-route-id="3">RedirectToRoute</a>
+        <a href="/Admin/Dashboard">Area route</a>
+        <a asp-route="routing-help">Complete concept guide</a>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>5. HttpPost With Route Template</h2>
+    <form method="post" action="/verb-demo" class="inline-form">
+        @Html.AntiForgeryToken()
+        <input name="message" value="Hello from POST routing" />
+        <button type="submit">POST /verb-demo</button>
+    </form>
+</section>

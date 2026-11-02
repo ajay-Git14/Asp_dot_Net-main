@@ -1,0 +1,13 @@
+@model string
+
+@{
+    var badgeClass = Model switch
+    {
+        "High" => "badge bg-danger",
+        "Medium" => "badge bg-warning text-dark",
+        "Low" => "badge bg-secondary",
+        _ => "badge bg-light text-dark border"
+    };
+}
+
+<span class="@badgeClass">@Model</span>

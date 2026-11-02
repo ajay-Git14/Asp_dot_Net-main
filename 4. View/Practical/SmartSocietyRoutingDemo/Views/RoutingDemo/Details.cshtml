@@ -1,0 +1,21 @@
+@model Complaint
+@{
+    ViewData["Title"] = "Complaint Details";
+}
+
+<section class="hero">
+    <p class="eyebrow">Named route: complaint-details</p>
+    <h1>Complaint @Model.Id</h1>
+    <p>The route value <code>id</code> selected this complaint.</p>
+</section>
+
+<section class="panel detail-list">
+    <p><strong>Reference:</strong> @Model.ReferenceNumber</p>
+    <p><strong>Title:</strong> @Model.Title</p>
+    <p><strong>Status:</strong> @Model.Status</p>
+    <p><strong>Block:</strong> @Model.Block</p>
+</section>
+
+<p>
+    <a class="button" asp-controller="RoutingDemo" asp-action="Index">Back to list</a>
+</p>

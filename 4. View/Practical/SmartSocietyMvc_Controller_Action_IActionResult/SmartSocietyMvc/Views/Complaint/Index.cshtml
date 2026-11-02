@@ -1,0 +1,46 @@
+@model List<SmartSocietyMvc.Models.ComplaintViewModel>
+
+@{
+    ViewData["Title"] = ViewData["PageTitle"];
+}
+
+<h1>@ViewData["PageTitle"]</h1>
+
+<p>@ViewBag.Message</p>
+
+<p>
+    <a href="/Complaint/Summary">View Complaint Summary</a>
+</p>
+
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Complaint Id</th>
+            <th>Title</th>
+            <th>Raised By</th>
+            <th>Flat Number</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Created Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var complaint in Model)
+        {
+            <tr>
+                <td>@complaint.Id</td>
+                <td>@complaint.Title</td>
+                <td>@complaint.RaisedBy</td>
+                <td>@complaint.FlatNumber</td>
+                <td>@complaint.Priority</td>
+                <td>@complaint.Status</td>
+                <td>@complaint.CreatedDate.ToString("dd-MMM-yyyy")</td>
+                <td>
+                    <a href="/Complaint/Details/@complaint.Id">View Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

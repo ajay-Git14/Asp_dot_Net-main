@@ -1,0 +1,71 @@
+@model RouteResultViewModel
+@{
+    ViewData["Title"] = Model.Heading;
+}
+
+<section class="hero">
+    <p class="eyebrow">Live route result</p>
+    <h1>@Model.Heading</h1>
+    <p>@Model.Explanation</p>
+</section>
+
+<section class="panel">
+    <h2>Request Information</h2>
+    <table>
+        <tbody>
+            <tr><th>HTTP method</th><td><code>@Model.HttpMethod</code></td></tr>
+            <tr><th>Request path</th><td><code>@Model.RequestPath</code></td></tr>
+            <tr><th>Selected endpoint</th><td><code>@Model.EndpointName</code></td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="panel">
+    <h2>Result</h2>
+    <ul>
+        @foreach (var message in Model.Messages)
+        {
+            <li>@message</li>
+        }
+    </ul>
+</section>
+
+<section class="panel">
+    <h2>Route Values</h2>
+    @if (Model.RouteValues.Count == 0)
+    {
+        <p>No route values were produced.</p>
+    }
+    else
+    {
+        <table>
+            <thead><tr><th>Key</th><th>Value</th></tr></thead>
+            <tbody>
+            @foreach (var pair in Model.RouteValues)
+            {
+                <tr><td>@pair.Key</td><td><code>@pair.Value</code></td></tr>
+            }
+            </tbody>
+        </table>
+    }
+</section>
+
+<section class="panel">
+    <h2>Query-String Values</h2>
+    @if (Model.QueryValues.Count == 0)
+    {
+        <p>No query-string values were supplied.</p>
+    }
+    else
+    {
+        <table>
+            <thead><tr><th>Key</th><th>Value</th></tr></thead>
+            <tbody>
+            @foreach (var pair in Model.QueryValues)
+            {
+                <tr><td>@pair.Key</td><td><code>@pair.Value</code></td></tr>
+            }
+            </tbody>
+        </table>
+    }
+</section>
